@@ -7,8 +7,7 @@ namespace Day_1
     {
         static void Main(string[] args)
         {
-            MyLibrary myLib = new MyLibrary();
-            string input = myLib.GetInput();
+            string input = GetInput();
             
             ASide(input);
             BSide(input);
@@ -50,6 +49,17 @@ namespace Day_1
             }
 
             Console.WriteLine("[B-SIDE] Santa first enters the basement on parenthesis " + currentChar);
+        }
+
+
+        static string GetInput()
+        {
+            string fileContent = "[Empty File]";
+
+            if (File.Exists("Input.txt"))
+                fileContent = File.ReadAllText("Input.txt");
+
+            return fileContent;
         }
     }
 }
