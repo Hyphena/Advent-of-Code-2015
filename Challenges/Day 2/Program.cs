@@ -25,11 +25,12 @@ namespace Day_2
             foreach (string element in wrappingPaper)
             {
                 int[] dimensions = Regex.Split(element, "x").Select(n => Convert.ToInt32(n)).ToArray();
-                Array.Sort(dimensions);
 
+                Array.Sort(dimensions);
                 int length = dimensions[0];
                 int width = dimensions[1];
                 int height = dimensions[2];
+
                 int surfaceArea = (2 * length * width) + (2 * width * height) + (2 * length * height);
                 int smallestArea = length * width;
 
@@ -42,8 +43,26 @@ namespace Day_2
 
         static void BSide(string input)
         {
-            //TODO: Complete Part 2
-            
+            // TODO: Skip over improperly formatted strings
+            string[] wrappingPaper = Regex.Split(input, "\r\n|\r|\n");
+            int totalRibbonLength = 0;
+
+            foreach (string element in wrappingPaper)
+            {
+                int[] dimensions = Regex.Split(element, "x").Select(n => Convert.ToInt32(n)).ToArray();
+
+                Array.Sort(dimensions);
+                int length = dimensions[0];
+                int width = dimensions[1];
+                int height = dimensions[2];
+
+                int smallestPerimeter = (2 * length) + (2 * width);
+                int boxVolume = length * width * height;
+
+                totalRibbonLength += smallestPerimeter + boxVolume;
+            }
+
+            Console.WriteLine("[B-SIDE] The elves will need to order " + totalRibbonLength + " feet of ribbon");
         }
 
 
