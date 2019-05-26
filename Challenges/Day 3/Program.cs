@@ -85,19 +85,98 @@ namespace Day_3
             }
 
 
-            foreach (House house in houses)
-            {
-                Console.WriteLine("X: " + house.x.ToString() + "   Y: " + house.y.ToString() + "   Deliveries: " + house.counter);
-            }
-
-
-            Console.WriteLine("\nTotal Houses Delivered To: " + houses.Count);
+            Console.WriteLine("Total Houses Delivered To: " + houses.Count);
         }
 
 
         static void BSide(string input)
         {
-            //TODO: Complete Part 2
+            List<House> houses = new List<House>();
+            List<House> roboHouses = new List<House>();
+            int santaX = 0;
+            int santaY = 0;
+            int roboX = 0;
+            int roboY = 0;
+            bool currentTurn = false;
+            bool houseExists = false;
+
+
+            houses.Add(new House(0, 0));
+            houses[0].counter++;
+            foreach (char dir in input)
+            {
+                if (!currentTurn)
+                {
+                    currentTurn = true;
+
+                    if (dir == '^')
+                        santaY++;
+                    if (dir == '>')
+                        santaX++;
+                    if (dir == 'v')
+                        santaY--;
+                    if (dir == '<')
+                        santaX--;
+                    
+                    houseExists = false;
+                    foreach (House house in houses)
+                    {
+                        if (house.x == santaX && house.y == santaY)
+                        {
+                            houseExists = true;
+                            house.counter++;
+                            break;
+                        }
+                    }
+
+                    if (!houseExists)
+                    {
+                        houses.Add(new House(santaX, santaY));
+                    }
+                }
+                else
+                {
+                    currentTurn = false;
+
+                    if (dir == '^')
+                        roboY++;
+                    if (dir == '>')
+                        roboX++;
+                    if (dir == 'v')
+                        roboY--;
+                    if (dir == '<')
+                        roboX--;
+                    
+                    houseExists = false;
+                    foreach (House house in houses)
+                    {
+                        if (house.x == roboX && house.y == roboY)
+                        {
+                            houseExists = true;
+                            house.counter++;
+                            break;
+                        }
+                    }
+
+                    if (!houseExists)
+                    {
+                        houses.Add(new House(roboX, roboY));
+                    }
+                }
+            }
+
+
+            foreach (House house in houses)
+            {
+                if (house.x == santaX && house.y == santaY)
+                {
+                    house.counter++;
+                    break;
+                }
+            }
+
+
+            Console.WriteLine("\nTotal Houses Delivered To: " + (houses.Count + roboHouses.Count));
         }
 
 
